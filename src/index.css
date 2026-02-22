@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    /* Pure Black */
+    --foreground: 0 0% 100%;
+    /* Pure White */
+
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 240 5.9% 10%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 5.9% 10%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 5.9% 10%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 15%;
+    --input: 240 5.9% 15%;
+    --ring: 0 0% 100%;
+
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border selection:bg-white/20 selection:text-white;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-500;
+    font-family: 'Inter', sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-black/40 backdrop-blur-xl border border-white/10;
+  }
+
+  .glass-white {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+
+  .card-shadow {
+    box-shadow: 0 0 50px -12px rgba(255, 255, 255, 0.05);
+  }
+
+  .kanban-column {
+    @apply bg-white/5 rounded-2xl p-4 min-h-[500px] border border-white/5;
+  }
+
+  .task-card {
+    @apply bg-zinc-900/50 rounded-xl p-4 border border-white/5 shadow-sm hover:shadow-lg hover:bg-zinc-900 transition-all cursor-grab active:cursor-grabbing mb-3;
+  }
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+}
