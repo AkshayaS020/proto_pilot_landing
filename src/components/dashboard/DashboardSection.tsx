@@ -10,14 +10,16 @@ interface SectionProps {
     children: React.ReactNode
     badge?: string
     badgeVariant?: "default" | "secondary" | "destructive" | "outline" | "success" | "warning" | "info"
+    delay?: number
 }
 
-export function DashboardSection({ title, icon: Icon, children, badge, badgeVariant = "info" }: SectionProps) {
+export function DashboardSection({ title, icon: Icon, children, badge, badgeVariant = "info", delay = 0 }: SectionProps) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay, ease: "easeOut" }}
         >
             <Card className="overflow-hidden border-slate-200/60 shadow-sm hover:shadow-md transition-shadow duration-300 bg-white">
                 <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 pb-4 border-b border-slate-100 bg-slate-50/30">

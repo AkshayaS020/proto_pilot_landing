@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { motion } from "framer-motion"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import {
     Plus,
@@ -111,10 +112,14 @@ export function KanbanBoard() {
                                     {data[column.id].map((task, index) => (
                                         <Draggable key={task.id} draggableId={task.id} index={index}>
                                             {(provided, snapshot) => (
-                                                <div
+                                                <motion.div
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}
                                                     {...provided.dragHandleProps}
+                                                    initial={{ opacity: 0, y: 10 }}
+                                                    whileInView={{ opacity: 1, y: 0 }}
+                                                    viewport={{ once: true }}
+                                                    transition={{ duration: 1, delay: index * 0.1 }}
                                                     className={cn(
                                                         "bg-white p-5 rounded-md border border-slate-200/60 shadow-sm mb-4 transition-all duration-300 select-none group",
                                                         snapshot.isDragging ? "shadow-xl border-slate-400 scale-[1.02] cursor-grabbing" : "hover:border-slate-300 hover:shadow-md"
@@ -154,7 +159,7 @@ export function KanbanBoard() {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </motion.div>
                                             )}
                                         </Draggable>
                                     ))}

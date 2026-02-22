@@ -19,6 +19,7 @@ import { KanbanBoard } from "@/components/kanban/KanbanBoard"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 export default function DashboardPage() {
     return (
@@ -48,30 +49,35 @@ export default function DashboardPage() {
                 <div className="lg:col-span-2 space-y-8">
 
                     {/* Executive Summary */}
-                    <DashboardSection title="Executive Summary" icon={FileText} badge="Business Analyst Certified" badgeVariant="info">
+                    <DashboardSection title="Executive Summary" icon={FileText} badge="Business Analyst Certified" badgeVariant="info" delay={0.1}>
                         <div className="space-y-6">
                             <p className="text-slate-600 leading-relaxed text-[15px]">
                                 EcoSwap Marketplace is engineered to institutionalize the circular fashion economy. By integrating automated asset condition diagnostics and longitudinal carbon footprint telemetry, the protocol establishes high-trust liquidity for sustainable trade.
                             </p>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-                                <div className="bg-white p-4 rounded-lg border border-slate-100 shadow-sm">
-                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">Focus Demographic</span>
-                                    <span className="text-[13px] font-bold text-slate-800">High-Intent Eco-Conscious Cohorts</span>
-                                </div>
-                                <div className="bg-white p-4 rounded-lg border border-slate-100 shadow-sm">
-                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">Addressable Market</span>
-                                    <span className="text-[13px] font-bold text-slate-800">Projected $77.4B Secondary Market</span>
-                                </div>
-                                <div className="bg-white p-4 rounded-lg border border-slate-100 shadow-sm">
-                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">Monetization Core</span>
-                                    <span className="text-[13px] font-bold text-slate-800">12.5% Basis Point Transaction Yield</span>
-                                </div>
+                                {[
+                                    { label: "Focus Demographic", value: "High-Intent Eco-Conscious Cohorts" },
+                                    { label: "Addressable Market", value: "Projected $77.4B Secondary Market" },
+                                    { label: "Monetization Core", value: "12.5% Basis Point Transaction Yield" }
+                                ].map((item, i) => (
+                                    <motion.div
+                                        key={item.label}
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.4, delay: 0.2 + (i * 0.1) }}
+                                        className="bg-white p-4 rounded-lg border border-slate-100 shadow-sm transition-all hover:border-slate-300"
+                                    >
+                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">{item.label}</span>
+                                        <span className="text-[13px] font-bold text-slate-800">{item.value}</span>
+                                    </motion.div>
+                                ))}
                             </div>
                         </div>
                     </DashboardSection>
 
                     {/* Architecture Protocol */}
-                    <DashboardSection title="Architecture Protocol" icon={Layers} badge="Architect Verified" badgeVariant="success">
+                    <DashboardSection title="Architecture Protocol" icon={Layers} badge="Architect Verified" badgeVariant="success" delay={0.2}>
                         <div className="space-y-8">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="space-y-4">
@@ -83,10 +89,17 @@ export default function DashboardPage() {
                                             "Node.js Ecosystem / TypeScript 5.0",
                                             "PostgreSQL / Prisma ORM Layer",
                                             "Redis In-Memory Data Lattice"
-                                        ].map((item) => (
-                                            <li key={item} className="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                                        ].map((item, i) => (
+                                            <motion.li
+                                                key={item}
+                                                initial={{ opacity: 0, x: -10 }}
+                                                whileInView={{ opacity: 1, x: 0 }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 0.3, delay: 0.3 + (i * 0.1) }}
+                                                className="flex items-center gap-3 text-sm text-slate-700 font-medium"
+                                            >
                                                 <CheckCircle2 className="h-4 w-4 text-slate-900" /> {item}
-                                            </li>
+                                            </motion.li>
                                         ))}
                                     </ul>
                                 </div>
@@ -99,27 +112,45 @@ export default function DashboardPage() {
                                             "AWS Managed Fargate (Serverless)",
                                             "CloudFront Edge Optimization",
                                             "S3 Object Storage (Asset Pipeline)"
-                                        ].map((item) => (
-                                            <li key={item} className="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                                        ].map((item, i) => (
+                                            <motion.li
+                                                key={item}
+                                                initial={{ opacity: 0, x: -10 }}
+                                                whileInView={{ opacity: 1, x: 0 }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 0.3, delay: 0.3 + (i * 0.1) }}
+                                                className="flex items-center gap-3 text-sm text-slate-700 font-medium"
+                                            >
                                                 <CheckCircle2 className="h-4 w-4 text-slate-900" /> {item}
-                                            </li>
+                                            </motion.li>
                                         ))}
                                     </ul>
                                 </div>
                             </div>
 
-                            <div className="pt-2">
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.5 }}
+                                className="pt-2"
+                            >
                                 <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4">Traffic Inversion Map</h4>
-                                <div className="bg-slate-950 rounded border border-slate-800 p-8 font-mono text-[11px] text-slate-400 leading-relaxed shadow-inner">
-                                    <pre className="opacity-80">
+                                <div className="bg-slate-950 rounded border border-slate-800 p-8 font-mono text-[11px] text-slate-400 leading-relaxed shadow-inner overflow-hidden group">
+                                    <motion.pre
+                                        initial={{ opacity: 0, scale: 0.98 }}
+                                        whileInView={{ opacity: 0.8, scale: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 1, delay: 0.6 }}
+                                    >
                                         {`[USER] ----(HTTPS)----> [EDGE GATEWAY] ----(LB)----> [API CORE]
                                                             |
                                         |-----------------------------------|
                                         v                                   v
                                 [REDIS CACHE] <---(I/O)---> [POSTGRES DB] <---(SYNC)---> [AI WORKER]`}
-                                    </pre>
+                                    </motion.pre>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
                     </DashboardSection>
 
@@ -130,6 +161,7 @@ export default function DashboardPage() {
                             icon={Zap}
                             badge="8 Active Tasks"
                             badgeVariant="info"
+                            delay={0.3}
                         >
                             <div className="-mx-6 -mb-6">
                                 <div className="px-6 pb-6">
@@ -144,7 +176,7 @@ export default function DashboardPage() {
                 <div className="space-y-8">
 
                     {/* Business Insights */}
-                    <DashboardSection title="Strategic Metrics" icon={BarChart3} badge="High Efficiency" badgeVariant="success">
+                    <DashboardSection title="Strategic Metrics" icon={BarChart3} badge="High Efficiency" badgeVariant="success" delay={0.4}>
                         <div className="space-y-6">
                             <div className="p-5 rounded-lg bg-slate-50/50 border border-slate-100">
                                 <div className="flex justify-between items-end mb-4">
@@ -160,8 +192,9 @@ export default function DashboardPage() {
                                 <div className="w-full bg-slate-200/60 h-1.5 rounded-full overflow-hidden">
                                     <motion.div
                                         initial={{ width: 0 }}
-                                        animate={{ width: "92.4%" }}
-                                        transition={{ duration: 1, delay: 0.5 }}
+                                        whileInView={{ width: "92.4%" }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
                                         className="bg-slate-900 h-full rounded-full"
                                     />
                                 </div>
@@ -174,14 +207,21 @@ export default function DashboardPage() {
                                         { label: "Acquisition Capacity", value: "Optimal" },
                                         { label: "Liquidity Retention", value: "94.2%" },
                                         { label: "Transaction Velocity", value: "Accelerated" }
-                                    ].map((item) => (
-                                        <li key={item.label} className="bg-white border border-slate-100 rounded-md p-3 shadow-none hover:border-slate-300 transition-all cursor-pointer group flex justify-between items-center">
+                                    ].map((item, i) => (
+                                        <motion.li
+                                            key={item.label}
+                                            initial={{ opacity: 0, y: 5 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.3, delay: 0.6 + (i * 0.1) }}
+                                            className="bg-white border border-slate-100 rounded-md p-3 shadow-none hover:border-slate-300 transition-all cursor-pointer group flex justify-between items-center"
+                                        >
                                             <span className="text-xs font-semibold text-slate-600 tracking-tight">{item.label}</span>
                                             <div className="flex items-center gap-2">
                                                 <span className="text-xs font-bold text-slate-900">{item.value}</span>
                                                 <ArrowUpRight className="h-3 w-3 text-slate-300 group-hover:text-slate-900 transition-colors" />
                                             </div>
-                                        </li>
+                                        </motion.li>
                                     ))}
                                 </ul>
                             </div>
@@ -189,38 +229,35 @@ export default function DashboardPage() {
                     </DashboardSection>
 
                     {/* Risk Management */}
-                    <DashboardSection title="Risk Assessment" icon={ShieldAlert} badge="Active Monitoring" badgeVariant="warning">
+                    <DashboardSection title="Risk Assessment" icon={ShieldAlert} badge="Active Monitoring" badgeVariant="warning" delay={0.5}>
                         <div className="space-y-3">
-                            <div className="flex items-center gap-4 p-4 rounded-lg bg-white border border-slate-100 hover:border-slate-200 transition-colors group">
-                                <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
-                                <div className="flex-1">
-                                    <div className="flex justify-between items-center mb-0.5">
-                                        <h4 className="text-[13px] font-bold text-slate-900">Regulatory Framework (EU/GDPR)</h4>
-                                        <Badge variant="outline" className="text-[9px] font-bold border-red-100 text-red-600 uppercase">Critical</Badge>
+                            {[
+                                { title: "Regulatory Framework (EU/GDPR)", desc: "Mandatory requirement for decentralized data retention policies.", variant: "Critical", color: "bg-red-500" },
+                                { title: "Throughput Constraints", desc: "Concurrent image classification may necessitate asynchronous clusters.", variant: "Moderate", color: "bg-amber-500" },
+                                { title: "Payment Latency Spectrum", desc: "Cross-border settlement windows identified at 4-7 business days.", variant: "Operational", color: "bg-blue-500" }
+                            ].map((risk, i) => (
+                                <motion.div
+                                    key={risk.title}
+                                    initial={{ opacity: 0, scale: 0.98 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.4, delay: 0.7 + (i * 0.1) }}
+                                    className="flex items-center gap-4 p-4 rounded-lg bg-white border border-slate-100 hover:border-slate-200 transition-colors group"
+                                >
+                                    <div className={cn("h-2 w-2 rounded-full animate-pulse", risk.color)} />
+                                    <div className="flex-1">
+                                        <div className="flex justify-between items-center mb-0.5">
+                                            <h4 className="text-[13px] font-bold text-slate-900">{risk.title}</h4>
+                                            <Badge variant="outline" className={cn("text-[9px] font-bold uppercase",
+                                                risk.variant === "Critical" ? "border-red-100 text-red-600" :
+                                                    risk.variant === "Moderate" ? "border-amber-100 text-amber-600" :
+                                                        "border-blue-100 text-blue-600"
+                                            )}>{risk.variant}</Badge>
+                                        </div>
+                                        <p className="text-[11px] text-slate-500 font-medium">{risk.desc}</p>
                                     </div>
-                                    <p className="text-[11px] text-slate-500 font-medium">Mandatory requirement for decentralized data retention policies.</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-4 p-4 rounded-lg bg-white border border-slate-100 hover:border-slate-200 transition-colors group">
-                                <div className="h-2 w-2 rounded-full bg-amber-500" />
-                                <div className="flex-1">
-                                    <div className="flex justify-between items-center mb-0.5">
-                                        <h4 className="text-[13px] font-bold text-slate-900">Throughput Constraints</h4>
-                                        <Badge variant="outline" className="text-[9px] font-bold border-amber-100 text-amber-600 uppercase">Moderate</Badge>
-                                    </div>
-                                    <p className="text-[11px] text-slate-500 font-medium">Concurrent image classification may necessitate asynchronous clusters.</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-4 p-4 rounded-lg bg-white border border-slate-100 hover:border-slate-200 transition-colors group">
-                                <div className="h-2 w-2 rounded-full bg-blue-500" />
-                                <div className="flex-1">
-                                    <div className="flex justify-between items-center mb-0.5">
-                                        <h4 className="text-[13px] font-bold text-slate-900">Payment Latency Spectrum</h4>
-                                        <Badge variant="outline" className="text-[9px] font-bold border-blue-100 text-blue-600 uppercase">Operational</Badge>
-                                    </div>
-                                    <p className="text-[11px] text-slate-500 font-medium">Cross-border settlement windows identified at 4-7 business days.</p>
-                                </div>
-                            </div>
+                                </motion.div>
+                            ))}
                             <Button variant="outline" className="w-full text-[11px] font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 mt-2 uppercase tracking-widest h-10 border-slate-100 transition-all">Audit Detailed Risk Vector</Button>
                         </div>
                     </DashboardSection>

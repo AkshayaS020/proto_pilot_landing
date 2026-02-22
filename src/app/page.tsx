@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { useRef } from "react"
 import { useRouter } from "next/navigation"
 import {
     Target,
@@ -10,13 +11,26 @@ import {
     Lock,
     Terminal,
     Code2,
-    Activity
+    Activity,
+    Component
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Navbar } from "@/components/Navbar"
+import { DemoDashboard } from "@/components/DemoDashboard"
 
 export default function LandingPage() {
     const router = useRouter()
+    const demoRef = useRef<HTMLDivElement>(null)
+
+    const { scrollYProgress } = useScroll({
+        target: demoRef,
+        offset: ["start end", "end start"]
+    })
+
+    const scrollOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
+    const scrollScale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8])
+    const scrollRotateX = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [15, 0, 0, -15])
+    const scrollYTranslate = useTransform(scrollYProgress, [0, 1], [0, -50])
 
     const features = [
         {
@@ -78,21 +92,19 @@ export default function LandingPage() {
                             y: 0,
                             borderColor: [
                                 "rgba(255,255,255,0.1)",
-                                "rgba(255,255,255,0.6)",
+                                "rgba(255,255,255,0.4)",
                                 "rgba(255,255,255,0.1)"
                             ]
                         }}
                         transition={{
-                            duration: 2.5,
+                            duration: 3,
                             repeat: Infinity,
                             ease: "easeInOut",
-                            opacity: { duration: 0.8 },
-                            y: { duration: 0.8 }
                         }}
-                        className="inline-flex items-center gap-2 px-6 py-2 rounded-none border bg-white/5 text-[10px] uppercase tracking-[0.4em] font-black mb-12 relative"
+                        className="inline-flex items-center gap-2 px-6 py-2 rounded-none border border-white/10 bg-white/5 text-[10px] uppercase tracking-[0.4em] font-black mb-12 relative"
                     >
-                        <Terminal className="h-3 w-3" />
-                        <span>System Status: Optimal</span>
+                        <ShieldCheck className="h-3 w-3" />
+                        <span>Security: Enterprise Grade</span>
                     </motion.div>
 
                     <motion.h1
@@ -111,7 +123,7 @@ export default function LandingPage() {
                         transition={{ duration: 0.8, delay: 0.3 }}
                         className="text-lg sm:text-xl lg:text-2xl text-zinc-500 max-w-3xl mb-16 leading-relaxed font-light px-4 sm:px-0"
                     >
-                        The high-performance autonomous architect for modern engineering teams. Convert logic into production-ready blueprints instantly.
+                        Intelligence-driven decision infrastructure for corporate venture building. Transform ambiguity into strategic roadmaps and verified MVPs.
                     </motion.p>
 
                     <motion.div
@@ -121,35 +133,28 @@ export default function LandingPage() {
                         className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-24 w-full sm:w-auto px-6 sm:px-0"
                     >
                         <Button size="lg" className="rounded-none bg-white text-black hover:bg-zinc-200 px-8 sm:px-16 h-16 sm:h-20 text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] transition-all duration-500" onClick={() => router.push("/new")}>
-                            Initialize Workspace <ChevronRight className="ml-2 h-4 w-4" />
+                            Launch Analysis <ChevronRight className="ml-2 h-4 w-4" />
                         </Button>
                         <Button variant="outline" size="lg" className="rounded-none border-white/10 text-white hover:bg-white hover:text-black px-8 sm:px-16 h-16 sm:h-20 text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] transition-all">
-                            Review Protocol
+                            Executive Overview
                         </Button>
                     </motion.div>
 
-                    {/* Floating Dashboard Preview */}
+                    {/* Floating Dashboard Preview / Demo Video Replacement */}
                     <motion.div
-                        initial={{ opacity: 0, y: 60 }}
+                        ref={demoRef}
+                        style={{
+                            opacity: scrollOpacity,
+                            scale: scrollScale,
+                            rotateX: scrollRotateX,
+                            y: scrollYTranslate
+                        }}
+                        initial={{ opacity: 0, y: 100 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1.5, delay: 0.5, ease: [0.19, 1, 0.22, 1] }}
-                        className="w-full max-w-6xl border border-white/5 bg-zinc-950/50 aspect-[16/9] relative group overflow-hidden"
+                        className="w-full max-w-6xl border border-white/10 bg-white aspect-[16/9] relative group overflow-hidden shadow-[0_0_100px_rgba(255,255,255,0.05)] perspective-1000"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
-                        <motion.img
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ duration: 2 }}
-                            src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2400"
-                            alt="Interface Preview"
-                            className="w-full h-full object-cover grayscale opacity-20 group-hover:opacity-40 transition-all duration-1000"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center z-20">
-                            <motion.div whileHover={{ scale: 1.1 }}>
-                                <div className="h-28 w-28 rounded-full border border-white/5 bg-black/50 backdrop-blur-2xl flex items-center justify-center cursor-pointer hover:border-white/20 transition-all">
-                                    <div className="ml-1 w-0 h-0 border-t-[14px] border-t-transparent border-l-[24px] border-l-white border-b-[14px] border-b-transparent" />
-                                </div>
-                            </motion.div>
-                        </div>
+                        <DemoDashboard />
                     </motion.div>
                 </div>
             </section>
@@ -195,7 +200,7 @@ export default function LandingPage() {
                         viewport={{ once: true }}
                         className="text-zinc-500 text-lg max-w-sm mb-6 leading-relaxed font-light"
                     >
-                        The core protocol for sovereign development. Every agent is optimized for sub-second execution.
+                        Strategic decision support powered by institutional intelligence. Every insight is vetted for executive reliability.
                     </motion.p>
                 </div>
 
@@ -233,14 +238,14 @@ export default function LandingPage() {
                             READY FOR <br /> DEPLOYMENT?
                         </h2>
                         <p className="text-zinc-500 text-sm sm:text-xl mb-12 sm:mb-20 max-w-2xl mx-auto font-medium uppercase tracking-[0.1em] px-2 sm:px-0 leading-relaxed">
-                            Access the most powerful architectural terminal ever built.
+                            Access the most sophisticated feasibility analytics portal in the market.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
                             <Button size="lg" className="w-full sm:w-auto bg-black text-white hover:bg-zinc-800 rounded-none px-8 sm:px-16 h-14 sm:h-20 text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] transition-all" onClick={() => router.push("/new")}>
-                                Initialize Node
+                                Start Analysis
                             </Button>
                             <Button variant="outline" size="lg" className="w-full sm:w-auto border-black text-black bg-white hover:bg-black hover:text-white rounded-none px-8 sm:px-16 h-14 sm:h-20 text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] transition-all">
-                                Contact Command
+                                Contact Sales
                             </Button>
                         </div>
                     </div>
@@ -252,14 +257,17 @@ export default function LandingPage() {
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-24 mb-24">
                         <div className="md:col-span-2">
-                            <div className="flex items-center gap-4 mb-8">
-                                <div className="flex h-12 w-12 items-center justify-center rounded-none bg-white text-black font-black text-2xl">
-                                    P
+                            <div className="flex items-center gap-3 cursor-pointer group mb-8" onClick={() => router.push("/")}>
+                                <div className="h-10 w-10 flex items-center justify-center transition-all duration-300">
+                                    <Component className="h-8 w-8 text-white transition-transform duration-500 group-hover:rotate-90 group-hover:scale-110" />
                                 </div>
-                                <span className="font-black text-2xl sm:text-3xl tracking-tighter uppercase whitespace-nowrap">PROTOPILOT <span className="text-zinc-700">AI</span></span>
+                                <div className="flex flex-col justify-center">
+                                    <span className="text-white font-black text-xl tracking-[0.3em] uppercase leading-none">PROTOPILOT</span>
+                                    <div className="h-[2px] w-0 bg-white group-hover:w-full transition-all duration-500 mt-2" />
+                                </div>
                             </div>
                             <p className="text-zinc-600 text-sm leading-relaxed max-w-sm font-light uppercase tracking-widest">
-                                High-performance autonomous terminal. <br /> Optimal precision mandatory.
+                                Intelligence-driven decision infrastructure. <br /> Precision for global enterprises.
                             </p>
                         </div>
                         <div>
