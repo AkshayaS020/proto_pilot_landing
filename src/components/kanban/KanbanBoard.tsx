@@ -86,15 +86,15 @@ export function KanbanBoard() {
             <div className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide min-h-[600px]">
                 {columns.map((column) => (
                     <div key={column.id} className="w-[300px] shrink-0">
-                        <div className="flex items-center justify-between mb-4 px-1">
-                            <div className="flex items-center gap-2">
-                                <h3 className="font-bold text-slate-700">{column.title}</h3>
-                                <span className="bg-slate-200 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        <div className="flex items-center justify-between mb-5 px-1">
+                            <div className="flex items-center gap-3">
+                                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">{column.title}</h3>
+                                <span className="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-sm border border-slate-200/50">
                                     {data[column.id].length}
                                 </span>
                             </div>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                                <Plus className="h-4 w-4 text-slate-400" />
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600">
+                                <Plus className="h-4 w-4" />
                             </Button>
                         </div>
 
@@ -104,8 +104,8 @@ export function KanbanBoard() {
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
                                     className={cn(
-                                        "kanban-column transition-colors duration-200",
-                                        snapshot.isDraggingOver ? "bg-primary/5 border-primary/20" : ""
+                                        "min-h-[500px] p-3 rounded-lg border border-dashed transition-colors duration-200",
+                                        snapshot.isDraggingOver ? "bg-slate-50 border-slate-300" : "bg-transparent border-slate-200"
                                     )}
                                 >
                                     {data[column.id].map((task, index) => (
@@ -116,40 +116,41 @@ export function KanbanBoard() {
                                                     {...provided.draggableProps}
                                                     {...provided.dragHandleProps}
                                                     className={cn(
-                                                        "task-card bg-white select-none",
-                                                        snapshot.isDragging ? "shadow-2xl ring-2 ring-primary border-transparent scale-[1.02] cursor-grabbing" : ""
+                                                        "bg-white p-5 rounded-md border border-slate-200/60 shadow-sm mb-4 transition-all duration-300 select-none group",
+                                                        snapshot.isDragging ? "shadow-xl border-slate-400 scale-[1.02] cursor-grabbing" : "hover:border-slate-300 hover:shadow-md"
                                                     )}
                                                 >
-                                                    <div className="flex justify-between items-start mb-3">
+                                                    <div className="flex justify-between items-start mb-4">
                                                         <Badge
-                                                            variant={
-                                                                task.priority === "High" ? "destructive" :
-                                                                    task.priority === "Medium" ? "warning" : "info"
-                                                            }
-                                                            className="text-[10px] uppercase font-bold px-2"
+                                                            variant="outline"
+                                                            className={cn(
+                                                                "text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm bg-white",
+                                                                task.priority === "High" ? "border-red-100 text-red-600" :
+                                                                    task.priority === "Medium" ? "border-amber-100 text-amber-600" :
+                                                                        "border-blue-100 text-blue-600"
+                                                            )}
                                                         >
                                                             {task.priority}
                                                         </Badge>
-                                                        <Button variant="ghost" size="icon" className="h-6 w-6 opacity-0 group-hover:opacity-100">
-                                                            <GripVertical className="h-3 w-3 text-slate-300" />
-                                                        </Button>
+                                                        <GripVertical className="h-3 w-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
                                                     </div>
-                                                    <h4 className="text-sm font-semibold text-slate-800 mb-4 leading-tight">
+                                                    <h4 className="text-[13px] font-bold text-slate-800 mb-6 leading-relaxed tracking-tight">
                                                         {task.title}
                                                     </h4>
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="flex -space-x-2">
-                                                            <div className="h-7 w-7 rounded-full bg-indigo-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-indigo-600">
+                                                    <div className="flex items-center justify-between pt-4 border-t border-slate-50">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="h-6 w-6 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-[9px] font-bold text-slate-600">
                                                                 {task.assignee}
                                                             </div>
+                                                            <span className="text-[10px] font-semibold text-slate-400">{task.assignee}</span>
                                                         </div>
-                                                        <div className="flex items-center gap-3 text-slate-400">
-                                                            <div className="flex items-center gap-1 text-[11px]">
+                                                        <div className="flex items-center gap-4 text-slate-400">
+                                                            <div className="flex items-center gap-1.5 text-[10px] font-bold">
                                                                 <MessageSquare className="h-3 w-3" />
                                                                 {task.comments}
                                                             </div>
-                                                            <div className="flex items-center gap-1 text-[11px] bg-slate-100 px-1.5 py-0.5 rounded">
-                                                                <span className="font-bold text-slate-600">{task.points}</span>
+                                                            <div className="flex items-center gap-1.5 text-[10px] font-bold bg-slate-50 px-2 py-0.5 rounded border border-slate-100">
+                                                                <span className="text-slate-500">{task.points} SP</span>
                                                             </div>
                                                         </div>
                                                     </div>

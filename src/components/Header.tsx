@@ -8,46 +8,41 @@ interface HeaderProps {
 
 export function Header({ onMenuClick }: HeaderProps) {
     return (
-        <header className="flex h-16 items-center justify-between border-b bg-white/80 px-4 sm:px-8 backdrop-blur-md sticky top-0 z-20">
+        <header className="flex h-16 items-center justify-between border-b border-slate-100 bg-white/90 px-4 sm:px-8 backdrop-blur-md sticky top-0 z-20">
             <div className="flex items-center gap-4 flex-1">
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="lg:hidden h-10 w-10 shrink-0"
+                    className="lg:hidden h-10 w-10 shrink-0 text-slate-500"
                     onClick={onMenuClick}
                 >
-                    <Menu className="h-6 w-6 text-slate-600" />
+                    <Menu className="h-5 w-5" />
                 </Button>
 
                 <div className="hidden sm:flex w-full max-w-sm items-center gap-2">
-                    <div className="relative w-full">
-                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
+                    <div className="relative w-full group">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 group-focus-within:text-slate-900 transition-colors" />
                         <Input
                             type="search"
-                            placeholder="Search projects..."
-                            className="w-full bg-slate-50 pl-9 transition-all focus:bg-white"
+                            placeholder="Find Intelligence..."
+                            className="w-full bg-slate-50/50 border-slate-100 pl-10 h-10 text-xs font-medium transition-all focus:bg-white focus:ring-1 focus:ring-slate-200"
                         />
                     </div>
                 </div>
-
-                {/* Mobile Search Icon Only */}
-                <Button variant="ghost" size="icon" className="sm:hidden h-10 w-10">
-                    <Search className="h-5 w-5 text-slate-500" />
-                </Button>
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-4">
-                <Button variant="ghost" size="icon" className="relative h-10 w-10">
-                    <Bell className="h-5 w-5 text-slate-500" />
-                    <span className="absolute right-2.5 top-2.5 flex h-2 w-2 rounded-full bg-primary ring-2 ring-white" />
+            <div className="flex items-center gap-2 sm:gap-6">
+                <Button variant="ghost" size="icon" className="relative h-9 w-9 text-slate-500 hover:text-slate-900 transition-colors">
+                    <Bell className="h-4 w-4" />
+                    <span className="absolute right-2 top-2 flex h-1.5 w-1.5 rounded-full bg-slate-900 ring-2 ring-white" />
                 </Button>
-                <div className="flex items-center gap-3 border-l pl-2 sm:pl-4">
-                    <div className="hidden sm:flex flex-col items-end">
-                        <span className="text-sm font-semibold">Akshaya</span>
-                        <span className="text-xs text-slate-400">Pro Architect</span>
+                <div className="flex items-center gap-3 border-l border-slate-100 pl-4 sm:pl-6 leading-none">
+                    <div className="hidden sm:flex flex-col items-end gap-0.5">
+                        <span className="text-[13px] font-bold text-slate-900 tracking-tight">Akshaya</span>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Lead Architect</span>
                     </div>
-                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-slate-100 border shadow-sm shrink-0">
-                        <User className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400" />
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-50 border border-slate-200 shadow-sm shrink-0 group hover:border-slate-400 transition-all cursor-pointer">
+                        <User className="h-4 w-4 text-slate-400 group-hover:text-slate-900 transition-colors" />
                     </div>
                 </div>
             </div>

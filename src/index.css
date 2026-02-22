@@ -36,11 +36,15 @@
     --input: 240 5.9% 15%;
     --ring: 0 0% 100%;
 
-    --radius: 1rem;
+    --radius: 0.5rem;
   }
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   * {
     @apply border-border selection:bg-white/20 selection:text-white;
   }

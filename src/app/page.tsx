@@ -73,9 +73,23 @@ export default function LandingPage() {
                 <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="inline-flex items-center gap-2 px-6 py-2 rounded-none border border-white/10 bg-white/5 text-[10px] uppercase tracking-[0.4em] font-black mb-12"
+                        animate={{
+                            opacity: 1,
+                            y: 0,
+                            borderColor: [
+                                "rgba(255,255,255,0.1)",
+                                "rgba(255,255,255,0.6)",
+                                "rgba(255,255,255,0.1)"
+                            ]
+                        }}
+                        transition={{
+                            duration: 2.5,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            opacity: { duration: 0.8 },
+                            y: { duration: 0.8 }
+                        }}
+                        className="inline-flex items-center gap-2 px-6 py-2 rounded-none border bg-white/5 text-[10px] uppercase tracking-[0.4em] font-black mb-12 relative"
                     >
                         <Terminal className="h-3 w-3" />
                         <span>System Status: Optimal</span>
@@ -141,7 +155,7 @@ export default function LandingPage() {
             </section>
 
             {/* Stats Section */}
-            <section className="relative py-40 z-10 border-y border-white/5 bg-black">
+            <section id="infra" className="relative py-40 z-10 border-y border-white/5 bg-black">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-20">
                         {stats.map((stat, idx) => (
@@ -206,8 +220,8 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="mb-48 px-4 sm:px-6 max-w-7xl mx-auto relative z-10">
+            {/* Network Section */}
+            <section id="network" className="mb-48 px-4 sm:px-6 max-w-7xl mx-auto relative z-10">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -233,8 +247,8 @@ export default function LandingPage() {
                 </motion.div>
             </section>
 
-            {/* Footer */}
-            <footer className="py-32 px-6 border-t border-white/5 bg-black relative z-10">
+            {/* Footer / Protocol Section */}
+            <footer id="protocol" className="py-32 px-6 border-t border-white/5 bg-black relative z-10">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-24 mb-24">
                         <div className="md:col-span-2">

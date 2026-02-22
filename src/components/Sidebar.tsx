@@ -50,16 +50,16 @@ export function Sidebar({ className, onClose }: SidebarProps) {
                 className
             )}
         >
-            <div className="flex h-16 items-center justify-between border-b px-6">
-                <div className="flex items-center gap-2 overflow-hidden">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg">
-                        <Layers className="h-5 w-5" />
+            <div className="flex h-16 items-center justify-between border-b border-slate-100 px-6 bg-slate-50/20">
+                <div className="flex items-center gap-3 overflow-hidden">
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-slate-900 shadow-sm shrink-0">
+                        <Layers className="h-4 w-4 text-white" />
                     </div>
                     <span className={cn(
-                        "text-lg font-bold transition-opacity duration-300 whitespace-nowrap",
+                        "text-sm font-black tracking-[0.2em] transition-opacity duration-300 whitespace-nowrap text-slate-900",
                         collapsed ? "opacity-0 invisible" : "opacity-100 visible"
                     )}>
-                        PROTOPILOT AI
+                        PROTOPILOT
                     </span>
                 </div>
 
@@ -82,14 +82,14 @@ export function Sidebar({ className, onClose }: SidebarProps) {
                             key={item.label}
                             href={item.path}
                             className={cn(
-                                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                                "flex items-center gap-3 rounded-md px-3 py-2 text-[13px] font-semibold transition-all duration-200 uppercase tracking-wider",
                                 isActive
-                                    ? "bg-primary/10 text-primary shadow-sm"
-                                    : "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+                                    ? "bg-slate-900 text-white shadow-md shadow-slate-200"
+                                    : "text-slate-500 hover:bg-slate-50 hover:text-slate-900 border border-transparent hover:border-slate-100"
                             )}
                             title={collapsed ? item.label : ""}
                         >
-                            <item.icon className="h-5 w-5 shrink-0" />
+                            <item.icon className={cn("h-4 w-4 shrink-0 transition-colors", isActive ? "text-white" : "text-slate-400 group-hover:text-slate-900")} />
                             <span className={cn(
                                 "transition-all duration-300 whitespace-nowrap",
                                 collapsed ? "opacity-0 invisible" : "opacity-100 visible"

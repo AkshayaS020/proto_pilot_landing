@@ -2,30 +2,55 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Component } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
 export function Navbar() {
     const router = useRouter()
+    const links = [
+        { name: "Features", href: "#features", id: "features" },
+        { name: "Infrastructure", href: "#infra", id: "infra" },
+        { name: "Network", href: "#network", id: "network" },
+    ]
+
     const [isScrolled, setIsScrolled] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
+    const [activeSection, setActiveSection] = useState("")
 
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10)
         }
-        window.addEventListener("scroll", handleScroll)
-        return () => window.removeEventListener("scroll", handleScroll)
-    }, [])
 
-    const links = [
-        { name: "Features", href: "#features" },
-        { name: "Infrastructure", href: "#infra" },
-        { name: "Network", href: "#network" },
-        { name: "Protocol", href: "#protocol" },
-    ]
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        }
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id)
+                }
+            })
+        }
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions)
+
+        links.forEach(link => {
+            const element = document.getElementById(link.id)
+            if (element) observer.observe(element)
+        })
+
+        window.addEventListener("scroll", handleScroll)
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+            observer.disconnect()
+        }
+    }, [])
 
     return (
         <header suppressHydrationWarning className={cn(
@@ -35,8 +60,13 @@ export function Navbar() {
             <div className="max-w-7xl mx-auto flex items-center justify-between">
                 {/* Brand */}
                 <div className="flex items-center gap-3 cursor-pointer group" onClick={() => router.push("/")}>
-                    <div className="h-8 w-8 sm:h-10 sm:w-10 bg-white text-black flex items-center justify-center font-black text-xl">P</div>
-                    <span className="text-white font-black text-xl sm:text-2xl tracking-tighter uppercase">PROTOPILOT AI</span>
+                    <div className="h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center transition-all duration-300">
+                        <Component className="h-6 w-6 sm:h-7 sm:w-7 text-white transition-transform duration-500 group-hover:rotate-90 group-hover:scale-110" />
+                    </div>
+                    <div className="flex flex-col justify-center">
+                        <span className="text-white font-black text-xs sm:text-sm tracking-[0.3em] uppercase leading-none">PROTOPILOT</span>
+                        <div className="h-[2px] w-0 bg-white group-hover:w-full transition-all duration-500 mt-1" />
+                    </div>
                 </div>
 
                 {/* Desktop Nav */}
